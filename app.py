@@ -1,10 +1,10 @@
-
 from fastapi import FastAPI, File, UploadFile
 from PIL import Image
 import tensorflow as tf
 import numpy as np
 import json
 import io
+import os
 
 app = FastAPI(
     title="GreenCycle Waste Classification API",
@@ -12,11 +12,16 @@ app = FastAPI(
     version="1.0"
 )
 
+# Get the folder where app.py is located
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # Load trained model
-model = tf.keras.models.load_model("waste_classifier.keras")
+MODEL_PATH = os.path.join(BASE_DIR, "waste_classifier.keras")
+model = tf.keras.models.load_model(MODEL_PATH)
 
 # Load class names
-with open("class_names.json", "r") as f:
+CLASS_NAMES_PATH = os.path.join(BASE_DIR, "class_names.json")
+with open(CLASS_NAMES_PATH, "r") as f:
     class_names = json.load(f)
 
 
@@ -63,4 +68,3 @@ async def predict(file: UploadFile = File(...)):
         "predicted_class": predicted_class,
         "confidence": round(confidence, 4)
     }
-    
