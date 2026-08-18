@@ -15,8 +15,14 @@ app = FastAPI(
 # Get the folder where app.py is located
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Load trained model
-MODEL_PATH = os.path.join(BASE_DIR, "waste_classifier.keras")
+# Download trained model from Hugging Face
+from huggingface_hub import hf_hub_download
+
+MODEL_PATH = hf_hub_download(
+    repo_id="Olumatin/greencycle-waste-classifier",
+    filename="waste_classifier.keras"
+)
+
 model = tf.keras.models.load_model(MODEL_PATH)
 
 # Load class names

@@ -5,3 +5,5 @@ python-multipart
 pillow
 tensorflow
 numpy
+
+huggingface_hub
