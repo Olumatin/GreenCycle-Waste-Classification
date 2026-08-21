@@ -7,3 +7,5 @@ tensorflow
 numpy
 
 huggingface_hub
+
+streamlit
